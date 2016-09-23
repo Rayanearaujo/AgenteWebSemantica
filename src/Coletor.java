@@ -8,6 +8,7 @@ import org.apache.jena.rdf.model.Resource;
 public class Coletor {
 	
 	public static void main(String[] args){
+		//http://dbpedia.org/resource/Zico,
 		String resourceUri = "http://liyangyu.com/foaf.rdf"; 
 		coletarDados(resourceUri);
 	}
