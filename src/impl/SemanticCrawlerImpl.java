@@ -19,10 +19,11 @@ public class SemanticCrawlerImpl implements SemanticCrawler{
 		graph.read(resourceURI);
 		//graph.write(System.out, "N3");
 		
-		graph.remove(graph.createResource(resourceURI),OWL.sameAs,graph.createResource(resourceURI));
-		
-		findAllSameAsInstances(graph);
-		
+		if(graph.contains(graph.createResource(resourceURI),OWL.sameAs)){
+			if(graph.contains(graph.createResource(resourceURI),OWL.sameAs,graph.createResource(resourceURI)))
+				graph.remove(graph.createResource(resourceURI),OWL.sameAs,graph.createResource(resourceURI));
+			findAllSameAsInstances(graph);
+		}
 		
 	}	
 
