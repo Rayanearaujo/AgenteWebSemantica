@@ -2,6 +2,7 @@ package impl;
 
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
+import org.apache.jena.rdf.model.Property;
 import org.apache.jena.rdf.model.RDFNode;
 import org.apache.jena.rdf.model.Resource;
 import org.apache.jena.rdf.model.Statement;
@@ -18,8 +19,16 @@ public class SemanticCrawlerImpl implements SemanticCrawler{
 		graph.read(resourceURI);
 		//graph.write(System.out, "N3");
 		
-		//Show all instances that have a owl:samAss property
-		System.out.println("\nfollowing instances have owl:samAss property:");
+		graph.remove(graph.createResource(resourceURI),OWL.sameAs,graph.createResource(resourceURI));
+		
+		findAllSameAsInstances(graph);
+		
+		
+	}	
+
+	public void findAllSameAsInstances(Model graph){
+		//Show all instances that have a owl:sameAs property
+		System.out.println("\nThe following instances have owl:samAss property:");
 		StmtIterator statements = graph.listStatements((Resource)null,OWL.sameAs,(RDFNode)null);
 		while (statements.hasNext()){
 			Statement statement = statements.nextStatement();
@@ -43,6 +52,5 @@ public class SemanticCrawlerImpl implements SemanticCrawler{
 			System.out.println();
 		
 		}
-	
-	}	
+	}
 }
