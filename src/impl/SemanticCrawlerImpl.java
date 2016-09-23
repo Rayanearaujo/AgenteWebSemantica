@@ -2,7 +2,6 @@ package impl;
 
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
-import org.apache.jena.rdf.model.Property;
 import org.apache.jena.rdf.model.RDFNode;
 import org.apache.jena.rdf.model.Resource;
 import org.apache.jena.rdf.model.Statement;
@@ -22,12 +21,13 @@ public class SemanticCrawlerImpl implements SemanticCrawler{
 		if(graph.contains(graph.createResource(resourceURI),OWL.sameAs)){
 			if(graph.contains(graph.createResource(resourceURI),OWL.sameAs,graph.createResource(resourceURI)))
 				graph.remove(graph.createResource(resourceURI),OWL.sameAs,graph.createResource(resourceURI));
-			findAllSameAsInstances(graph);
+			findAllSameAsInstances(graph, resourceURI);
 		}
+		
 		
 	}	
 
-	public void findAllSameAsInstances(Model graph){
+	public void findAllSameAsInstances(Model graph, String resourceUri){
 		//Show all instances that have a owl:sameAs property
 		System.out.println("\nThe following instances have owl:samAss property:");
 		StmtIterator statements = graph.listStatements((Resource)null,OWL.sameAs,(RDFNode)null);
@@ -49,7 +49,18 @@ public class SemanticCrawlerImpl implements SemanticCrawler{
 				System.out.print( "(" + object.toString() + ")" );
 			else if (object.isResource())
 				System.out.print( "(" + object.getURI() + ")" );
-
+			
+			String nextURI;
+			if(subject.getURI().equals(resourceUri))
+				nextURI = object.getURI();
+			else
+				nextURI = subject.getURI();
+			
+			
+			Model model = ModelFactory.createDefaultModel();
+			search(model, nextURI);
+			
+			
 			System.out.println();
 		
 		}
