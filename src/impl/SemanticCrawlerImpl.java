@@ -1,5 +1,8 @@
 package impl;
 
+import java.nio.charset.Charset;
+import java.nio.charset.CharsetEncoder;
+
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
 import org.apache.jena.rdf.model.RDFNode;
@@ -56,9 +59,13 @@ public class SemanticCrawlerImpl implements SemanticCrawler{
 			else
 				nextURI = subject.getURI();
 			
+			CharsetEncoder enc = Charset.forName("ISO-8859-1").newEncoder();
+			if (enc.canEncode(nextURI))
+			{
+				Model model = ModelFactory.createDefaultModel();
+				search(model, nextURI);
+			}
 			
-			Model model = ModelFactory.createDefaultModel();
-			search(model, nextURI);
 			
 			
 			System.out.println();
