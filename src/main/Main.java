@@ -8,7 +8,7 @@ import impl.SemanticCrawlerImpl;
 public class Main {
 	public static void main(String[] args){
 		Model model = ModelFactory.createDefaultModel();
-		String resourceUri = "http://dbpedia.org/resource/Zico"; 
+		String resourceUri = "http://dbpedia.org/resource/Azul"; 
 		SemanticCrawlerImpl sci = new SemanticCrawlerImpl();
 		sci.search(model, resourceUri);
 	}
