@@ -63,7 +63,7 @@ public class SemanticCrawlerImpl implements SemanticCrawler{
 					{
 						
 						if(!visitedURIs.contains(nextURI))
-							search(graph, nextURI);
+							graph = graph.add(search(graph, nextURI));
 					}
 		
 					System.out.println();
@@ -72,7 +72,7 @@ public class SemanticCrawlerImpl implements SemanticCrawler{
 			graph = graph.add(model);
 		}
 		catch(HttpException httpException){ 
-			System.out.println("***** deu erro "); 
+			System.out.println("*** não foi possível ler essa URI "); 
 		}
 		return graph;
 		
